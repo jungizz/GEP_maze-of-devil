@@ -5690,10 +5690,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2138433633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b2f41e00a0a84a40babc5960e162689, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e78470c2696646a6934a66683aaa8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
+  bulletObj: {fileID: 5807634355277370627, guid: 7aa87e421e95647d7904ba10e85c2183, type: 3}
+  HP: 100
+  maxShotDelay: 1
+  curShotDelay: 0
+  playerSpeed: 200
+  bulletSpeed: 10
 --- !u!61 &2138433636
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,8 +8,11 @@ public class Bullet : MonoBehaviour
     public string BulletName;
 
     private Player playerScript;
+    private Enemy enemyScript;
 
     private GameManager gameManager;
+
+    public int playerBulletSpeed;
 
     void Start()
     {
@@ -18,6 +21,7 @@ public class Bullet : MonoBehaviour
 
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
         gameManager = gameManagerObject.GetComponent<GameManager>();
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -25,7 +29,17 @@ public class Bullet : MonoBehaviour
         //플레이어가 쏘는 총알일 경우 실행
         if(BulletName == "P")
         {
-            //아직 코드를 짜지 못함
+            //Tag가 Enemy일 때 실행
+            if(collision.CompareTag("Enemy")) {
+                GameObject enemy = collision.gameObject;
+                enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.HP -= 10;
+                if(enemyScript.HP <= 0) {
+                    enemyScript.DropItem();
+                    Destroy(collision.gameObject);
+                }
+                Destroy(gameObject);
+            }
         }else if(BulletName == "E") //적이 쏘는 총알일 경우 실행
         {
             //Tag가 player일 때 실행

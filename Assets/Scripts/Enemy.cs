@@ -5,14 +5,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public static float speed;
-    public static float AD;
     public float HP;
 
-    Rigidbody2D rigid;
-   
-    void Start()
+    public GameObject[] items;
+
+    public void DropItem()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        AD = 10.0f;
+        int ran = Random.Range(0,5);
+        if(ran >= 2)
+            return;
+        if(ran == 1 && items[1].gameObject == null)
+            return;
+        Instantiate(items[ran], transform.position, transform.rotation);
     }
 }

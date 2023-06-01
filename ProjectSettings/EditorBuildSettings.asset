@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: b37b4a13f5c8c4b34ad7da6a1637cb04
+  - enabled: 1
     path: Assets/Scenes/SadVillage.unity
     guid: cfa959b3e04c17b4caaf7c6ec8a28d66
   - enabled: 1

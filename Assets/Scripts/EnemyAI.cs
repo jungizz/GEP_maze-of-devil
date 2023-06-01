@@ -56,9 +56,6 @@ public class EnemyAI : MonoBehaviour
             anim.SetBool("isTraceRight",true);
         }
 
-        // dirX = (dirX < 0) ? -1 : 1;
-        // dirY = (dirY < 0) ? -1 : 1;
-
         transform.Translate(new Vector2(dirX, dirY) * speed * Time.deltaTime);
     }
 
@@ -66,7 +63,6 @@ public class EnemyAI : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log(playerScript.HP);
             playerScript.HP -= 1;
             if(playerScript.HP <= 0) {
                 gameManager.GameOver(); //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌

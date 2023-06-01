@@ -9,6 +9,8 @@ TagManager:
   - Boundary
   - Bullet
   - GameManager
+  - HPItem
+  - Staff
   layers:
   - Default
   - TransparentFX
@@ -54,6 +56,9 @@ TagManager:
     locked: 0
   - name: Bullet
     uniqueID: 1020188541
+    locked: 0
+  - name: Item
+    uniqueID: 3916305991
     locked: 0
   - name: Player
     uniqueID: 3976045255
