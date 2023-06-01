@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public GameObject mapBoundary;
     public GameObject bulletObj;
 
     public float HP;
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRb;
     private Animator playerAnim;
 
-    private void Awake()
+    private void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
@@ -39,11 +40,14 @@ public class Player : MonoBehaviour
     
     private void FixedUpdate()
     {
+        //플레이어 움직임
         playerRb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * playerSpeed * Time.deltaTime;
 
+        //플레이어 이동 애니메이션
         playerAnim.SetFloat("moveX", playerRb.velocity.x);
         playerAnim.SetFloat("moveY", playerRb.velocity.y);
 
+        //방향에 일치하는 Idle 애니메이션 적용을 위해 lastMoveX/Y 변수에 저장
         if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             playerAnim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));

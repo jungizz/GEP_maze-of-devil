@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChatwithNPC : MonoBehaviour
 {
+    //대사 시작
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Villager"))
@@ -15,6 +16,8 @@ public class ChatwithNPC : MonoBehaviour
             }
         }
     }
+
+    //대사 끝
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Villager"))
