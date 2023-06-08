@@ -5,48 +5,47 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public GameObject mapBoundary;
     public GameObject bulletObj;
 
     public float HP;
-    public bool getStaff;
+    public float playerSpeed;
+    
+    [HideInInspector] public bool getStaff;
 
     //일반공격 관련 변수
-    public float maxAttackDelay;
-    public float curAttackDelay;
-    public Transform pos;
+    private Transform pos;
+    public Transform posRight;
+    public Transform posLeft;
+    public Transform posUp;
+    public Transform posDown;
+
     public Vector2 boxSize;
 
-    public float playerSpeed;
-    public float bulletSpeed;
-
-    private float checkMoveX; //방향에 따라 총알이 날라가도록 변수 설정
-    private float checkMoveY;
+    //방향에 따라 총알이 날라가도록 변수 설정
+    [HideInInspector] public float checkMoveX;
+    [HideInInspector] public float checkMoveY;
 
     private Rigidbody2D playerRb;
     private Animator playerAnim;
+    private Attack attackscript;
 
     private void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
+        pos = posRight;
+        attackscript = GetComponent<Attack>();
     }
 
     void Update()
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            StaffAttack();
+            if(Input.GetKeyDown(KeyCode.Z) && getStaff)
+                attackscript.basicShoot();
 
-            //쿨타임 계산
-            if(curAttackDelay <= 0)
-            {
+            if(Input.GetKeyDown(KeyCode.Space))
                 basicAttack();
-                curAttackDelay = maxAttackDelay;
-            }
-            else{
-                curAttackDelay -= Time.deltaTime;
-            }
         }
     }
     
@@ -71,20 +70,31 @@ public class Player : MonoBehaviour
 
     void basicAttack()
     {
-        if(Input.GetKeyDown(KeyCode.Z) && getStaff == false)
+        if(checkMoveX < 0)
         {
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-            foreach (Collider2D collider in collider2Ds)
-            {
-                if(collider.tag == "Enemy")
-                {
-                    Debug.Log("sadas");
-                    collider.GetComponent<Enemy>().HP -= 5;
-                }
-            }
-            playerAnim.SetBool("isAttack", true);
-            Invoke("stopAttack", 0.3f);
+            pos = posLeft;
+        }else if(checkMoveX > 0)
+        {
+            pos = posRight;
+        }else if(checkMoveY < 0)
+        {
+            pos = posDown;
+        }else if(checkMoveY > 0)
+        {
+            pos = posUp;
         }
+
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if(collider.tag == "Enemy")
+            {
+                Debug.Log("sadas");
+                collider.GetComponent<Enemy>().HP -= 5;
+            }
+        }
+        playerAnim.SetBool("isAttack", true);
+        Invoke("stopAttack", 0.3f);
     }
 
     void stopAttack()
@@ -92,22 +102,11 @@ public class Player : MonoBehaviour
         playerAnim.SetBool("isAttack", false);
     }
 
-    void StaffAttack()
-    {
-        if(Input.GetKeyDown(KeyCode.Space) && getStaff)
-        {
-            Rigidbody2D playerRb = this.GetComponent<Rigidbody2D>();
-            GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
-            Rigidbody2D rb2d = bullet.GetComponent<Rigidbody2D>();
-            rb2d.AddForce(new Vector2(checkMoveX,checkMoveY) * bulletSpeed, ForceMode2D.Impulse);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(pos.position,boxSize);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawWireCube(pos.position,boxSize);
+    // }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
