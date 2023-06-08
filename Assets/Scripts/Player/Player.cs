@@ -82,8 +82,14 @@ public class Player : MonoBehaviour
                     collider.GetComponent<Enemy>().HP -= 5;
                 }
             }
-            playerAnim.SetTrigger("attack");
+            playerAnim.SetBool("isAttack", true);
+            Invoke("stopAttack", 0.3f);
         }
+    }
+
+    void stopAttack()
+    {
+        playerAnim.SetBool("isAttack", false);
     }
 
     void StaffAttack()
