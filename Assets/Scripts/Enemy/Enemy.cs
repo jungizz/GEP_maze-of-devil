@@ -9,9 +9,18 @@ public class Enemy : MonoBehaviour
 
     public GameObject[] items;
 
+    public void Update()
+    {
+        if(HP <= 0)
+        {
+            Destroy(this.gameObject);
+            DropItem();
+        }
+    }
+
     public void DropItem()
     {
-        int ran = Random.Range(0,5);
+        int ran = Random.Range(0,4);
         if(ran >= 2)
             return;
         if(ran == 1 && items[1].gameObject == null)

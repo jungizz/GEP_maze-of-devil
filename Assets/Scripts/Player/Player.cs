@@ -11,8 +11,11 @@ public class Player : MonoBehaviour
     public float HP;
     public bool getStaff;
 
-    public float maxShotDelay;
-    public float curShotDelay;
+    //일반공격 관련 변수
+    public float maxAttackDelay;
+    public float curAttackDelay;
+    public Transform pos;
+    public Vector2 boxSize;
 
     public float playerSpeed;
     public float bulletSpeed;
@@ -27,14 +30,23 @@ public class Player : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
-        HP = 100;
     }
 
     void Update()
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            Fire();
+            StaffAttack();
+
+            //쿨타임 계산
+            if(curAttackDelay <= 0)
+            {
+                basicAttack();
+                curAttackDelay = maxAttackDelay;
+            }
+            else{
+                curAttackDelay -= Time.deltaTime;
+            }
         }
     }
     
@@ -54,11 +66,27 @@ public class Player : MonoBehaviour
             playerAnim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
             checkMoveX = Input.GetAxisRaw("Horizontal");
             checkMoveY = Input.GetAxisRaw("Vertical");
-
         }
     }
 
-    void Fire()
+    void basicAttack()
+    {
+        if(Input.GetKeyDown(KeyCode.Z) && getStaff == false)
+        {
+            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+            foreach (Collider2D collider in collider2Ds)
+            {
+                if(collider.tag == "Enemy")
+                {
+                    Debug.Log("sadas");
+                    collider.GetComponent<Enemy>().HP -= 5;
+                }
+            }
+            playerAnim.SetTrigger("attack");
+        }
+    }
+
+    void StaffAttack()
     {
         if(Input.GetKeyDown(KeyCode.Space) && getStaff)
         {
@@ -67,6 +95,12 @@ public class Player : MonoBehaviour
             Rigidbody2D rb2d = bullet.GetComponent<Rigidbody2D>();
             rb2d.AddForce(new Vector2(checkMoveX,checkMoveY) * bulletSpeed, ForceMode2D.Impulse);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position,boxSize);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

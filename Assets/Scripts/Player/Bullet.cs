@@ -34,10 +34,9 @@ public class Bullet : MonoBehaviour
                 GameObject enemy = collision.gameObject;
                 enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.HP -= 10;
-                if(enemyScript.HP <= 0) {
-                    enemyScript.DropItem();
-                    Destroy(collision.gameObject);
-                }
+                // if(enemyScript.HP <= 0) {
+                //     Destroy(collision.gameObject);
+                // }
                 Destroy(gameObject);
             }
         }else if(BulletName == "E") //적이 쏘는 총알일 경우 실행
