@@ -6,13 +6,16 @@ public class Attack : MonoBehaviour
 {
     public GameObject bulletObjE;
     public GameObject bulletObjP;
+    public GameObject staff;
+    public GameObject machete;
+
     public GameObject player;
 
     public float maxShotDelay;
     public float curShotDelay;
 
     //적과 플레이어를 구분하기 위한 변수
-    public string GameObjectName;
+    public string gameObjectName;
 
     //플레이어 스크립트 변수
     private Player playerScript;
@@ -24,17 +27,37 @@ public class Attack : MonoBehaviour
 
     void Update()
     {
-        if(GameObjectName == "ShootE" )
+        if(gameObjectName == "ShootE")
         {
             basicShoot();
-            Reload();
+            reload();
+        }
+
+        if(gameObjectName == "MacheteE")
+        {
+            macheteAttack();
+        }
+    }
+
+    //창을 휘두르는 공격패턴
+    void macheteAttack()
+    {
+        float dirX = player.transform.position.x - transform.position.x;
+        float dirY = player.transform.position.y - transform.position.y;
+        
+        if(dirX <= 0)
+        {
+            machete.transform.position = transform.position + new Vector3(-0.4f,0,0);
+        }else
+        {
+            machete.transform.position = transform.position + new Vector3(0.4f,0,0);
         }
     }
 
     //총알 하나 날라가는 공격패턴
     public void basicShoot()
     {
-        if(GameObjectName == "ShootE")
+        if(gameObjectName == "ShootE")
         {
             if(curShotDelay < maxShotDelay)
             {
@@ -52,7 +75,7 @@ public class Attack : MonoBehaviour
             }
 
             curShotDelay = 0; //총알은 쏜 다음에는 딜레이 변수 0으로 초기화
-        }else if(GameObjectName == "P")
+        }else if(gameObjectName == "P")
         {
             Rigidbody2D playerRb = this.GetComponent<Rigidbody2D>();
             GameObject bullet = Instantiate(bulletObjP, transform.position, transform.rotation);
@@ -61,7 +84,9 @@ public class Attack : MonoBehaviour
         }
     }
 
-    void Reload()
+    
+
+    void reload()
     {
         curShotDelay += Time.deltaTime;
     }

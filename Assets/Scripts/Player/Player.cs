@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     public float HP;
     public float playerSpeed;
-    
     [HideInInspector] public bool getStaff;
 
     //일반공격 관련 변수
@@ -89,7 +88,6 @@ public class Player : MonoBehaviour
         {
             if(collider.tag == "Enemy")
             {
-                Debug.Log("sadas");
                 collider.GetComponent<Enemy>().HP -= 5;
             }
         }

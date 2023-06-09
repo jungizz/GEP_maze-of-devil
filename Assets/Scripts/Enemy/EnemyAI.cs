@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
    
     public float speed;
     public float limitDis;
+    private float dirX;
+    private float dirY;
 
     private Animator anim;
 
@@ -30,28 +32,40 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         float dis = Vector3.Distance(transform.position, target.position);
+        dirX = target.position.x - transform.position.x;
+        dirY = target.position.y - transform.position.y;
+
         if (dis <= limitDis)
         {
             Move();
         }
         else
         {
-            anim.SetBool("isTraceLeft",false);
-            anim.SetBool("isTraceRight",false);
+            if(dirX <= 0)
+            {
+                anim.SetBool("isIdleLeft", true);
+                anim.SetBool("isTraceRight",false);
+                anim.SetBool("isTraceLeft",false);
+            }else
+            {
+                anim.SetBool("isIdleLeft", false);
+                anim.SetBool("isTraceRight",false);
+                anim.SetBool("isTraceLeft",false);
+            }
             return;
         }
     }
 
     void Move()
     {
-        float dirX = target.position.x - transform.position.x;
-        float dirY = target.position.y - transform.position.y;
         if(dirX <= 0)
         {
+            anim.SetBool("isIdleLeft", false);
             anim.SetBool("isTraceRight",false);
             anim.SetBool("isTraceLeft",true);
-        }else if(dirX > 0)
+        }else
         {
+            anim.SetBool("isIdleLeft", false);
             anim.SetBool("isTraceLeft",false);
             anim.SetBool("isTraceRight",true);
         }
