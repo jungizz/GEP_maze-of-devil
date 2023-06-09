@@ -22,7 +22,12 @@ public class GameManager : MonoBehaviour
 
     public void RePlayGame()
     {
-        SceneManager.LoadScene("Dungeon");
+        //처음 위치에서 리스폰
+        GameObject player = GameObject.FindWithTag("Player");
+        player.transform.position = new Vector3(0.08f, -1.95f, 0);
+        player.GetComponent<Player>().HP = 100;
+        Camera.main.gameObject.transform.position = new Vector3(0, 0.1f, -10f);
+        gameOverPanel.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
 

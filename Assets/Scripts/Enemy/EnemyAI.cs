@@ -78,9 +78,9 @@ public class EnemyAI : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             playerScript.HP -= 1;
-            if(playerScript.HP <= 0) {
-                gameManager.GameOver(); //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
-            }
+            //if(playerScript.HP <= 0) {
+            //    gameManager.GameOver(); //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
+            //}
         }
     }
 }

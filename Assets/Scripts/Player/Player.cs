@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     public float HP;
     public float playerSpeed;
     [HideInInspector] public bool getStaff;
+    [HideInInspector] public bool getBomb;
+
+    //키를 얻었을 때 화면에 띄울 이미지
+    public GameObject keyImage;
 
     //일반공격 관련 변수
     private Transform pos;
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRb;
     private Animator playerAnim;
     private Attack attackscript;
+    private GameManager gameManager;
 
     private void Start()
     {
@@ -34,17 +39,28 @@ public class Player : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         pos = posRight;
         attackscript = GetComponent<Attack>();
+        GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
+        gameManager = gameManagerObject.GetComponent<GameManager>();
     }
 
     void Update()
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            if(Input.GetKeyDown(KeyCode.Z) && getStaff)
-                attackscript.basicShoot();
-
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                if (getStaff) attackscript.basicShoot();
+                else if(getBomb) attackscript.BombAttack();
+            }
+                
             if(Input.GetKeyDown(KeyCode.Space))
                 basicAttack();
+        }
+
+        //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
+        if (HP <= 0)
+        {
+            gameManager.GameOver(); 
         }
     }
     
@@ -113,10 +129,23 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             HP += 10;
         }
-        if(collision.gameObject.CompareTag("Staff"))
+        if (collision.gameObject.CompareTag("KeyItem"))
+        {
+            Destroy(collision.gameObject);
+            keyImage.SetActive(true);
+        }
+
+        if (collision.gameObject.CompareTag("Staff"))
         {
             Destroy(collision.gameObject);
             getStaff = true;
+            getBomb = false;
+        }
+        if (collision.gameObject.CompareTag("BombItem"))
+        {
+            Destroy(collision.gameObject);
+            getBomb = true;
+            getStaff = false;
         }
     }
 }

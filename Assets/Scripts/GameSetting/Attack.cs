@@ -6,6 +6,7 @@ public class Attack : MonoBehaviour
 {
     public GameObject bulletObjE;
     public GameObject bulletObjP;
+    public GameObject bombObjP;
     public GameObject staff;
     public GameObject machete;
 
@@ -36,6 +37,12 @@ public class Attack : MonoBehaviour
         if(gameObjectName == "MacheteE")
         {
             macheteAttack();
+        }
+
+        if (gameObjectName == "BombE")
+        {
+            BombAttack();
+            reload();
         }
     }
 
@@ -84,7 +91,22 @@ public class Attack : MonoBehaviour
         }
     }
 
-    
+    //폭탄을 던지는 공격패턴
+    public void BombAttack()
+    {
+        if (gameObjectName == "BombE")
+        {
+            if (curShotDelay < maxShotDelay) return;
+            GameObject bomb = Instantiate(bulletObjE, transform.position, transform.rotation);
+
+            curShotDelay = 0;
+        }
+        else if (gameObjectName == "P")
+        {
+            GameObject bomb = Instantiate(bombObjP, transform.position, transform.rotation);
+        }
+    }
+
 
     void reload()
     {

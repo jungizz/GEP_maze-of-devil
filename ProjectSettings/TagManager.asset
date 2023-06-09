@@ -11,6 +11,8 @@ TagManager:
   - GameManager
   - HPItem
   - Staff
+  - BombItem
+  - KeyItem
   layers:
   - Default
   - TransparentFX
