@@ -21,6 +21,11 @@ public class HPBar : MonoBehaviour
     {
         transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + Vector3.up);
         PlayerHP();
+
+        if(playerScript.HP <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void PlayerHP()

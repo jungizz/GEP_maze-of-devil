@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target;
-   
+    public Transform player;
+    
+    //적이 속도 변수
     public float speed;
+
+    //거리 관련 변수
     public float limitDis;
     private float dirX;
     private float dirY;
+    private float dis;
 
     private Animator anim;
 
+    //스크립트 변수
     private Enemy enemyScript;
-    private Player playerScript;
     private GameManager gameManager;
+    private Attack attackScript;
 
     void Start()
     {
         anim = this.gameObject.GetComponent<Animator>();
         enemyScript = this.gameObject.GetComponent<Enemy>();
+        attackScript = this.gameObject.GetComponent<Attack>();
 
         GameObject playerObject = GameObject.FindWithTag("Player");
-        playerScript = playerObject.GetComponent<Player>();
 
         GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
         gameManager = gameManagerObject.GetComponent<GameManager>();
@@ -31,56 +36,40 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        float dis = Vector3.Distance(transform.position, target.position);
-        dirX = target.position.x - transform.position.x;
-        dirY = target.position.y - transform.position.y;
+        //거리 계산
+        dis = Vector3.Distance(transform.position, player.position);
+        dirX = player.position.x - transform.position.x;
+        dirY = player.position.y - transform.position.y;
 
+        //일정 범위내에 플레이어가 들어왔을 시 따라가는 함수 실행
         if (dis <= limitDis)
         {
             Move();
         }
         else
         {
-            if(dirX <= 0)
-            {
-                anim.SetBool("isIdleLeft", true);
-                anim.SetBool("isTraceRight",false);
-                anim.SetBool("isTraceLeft",false);
-            }else
-            {
-                anim.SetBool("isIdleLeft", false);
-                anim.SetBool("isTraceRight",false);
-                anim.SetBool("isTraceLeft",false);
-            }
-            return;
+            //가만히 있는 애니메이션 실행
+            anim.SetBool("isTraceRight",false);
+            anim.SetBool("isTraceLeft",false);
         }
     }
 
     void Move()
-    {
+    {   
+        //방향에 따라 다른 애니메이션 실행
         if(dirX <= 0)
         {
-            anim.SetBool("isIdleLeft", false);
+            //왼쪽으로 움직이는 애니메이션 실행
             anim.SetBool("isTraceRight",false);
             anim.SetBool("isTraceLeft",true);
         }else
         {
-            anim.SetBool("isIdleLeft", false);
+            //오른쪽으로 움직이는 애니메이션 실행
             anim.SetBool("isTraceLeft",false);
             anim.SetBool("isTraceRight",true);
         }
 
+        //적이 플레이어쪽으로 움직이도록 설정
         transform.Translate(new Vector2(dirX, dirY) * speed * Time.deltaTime);
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            playerScript.HP -= 1;
-            //if(playerScript.HP <= 0) {
-            //    gameManager.GameOver(); //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
-            //}
-        }
     }
 }

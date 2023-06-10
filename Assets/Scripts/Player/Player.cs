@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     public float HP;
     public float playerSpeed;
+    private bool dieCheck;
     [HideInInspector] public bool getStaff;
     [HideInInspector] public bool getBomb;
 
@@ -47,20 +48,22 @@ public class Player : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            if(Input.GetKeyDown(KeyCode.Z))
+            if(Input.GetKeyDown(KeyCode.Z) && !dieCheck)
             {
                 if (getStaff) attackscript.basicShoot();
                 else if(getBomb) attackscript.BombAttack();
             }
                 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Space) && !dieCheck)
                 basicAttack();
         }
 
         //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
         if (HP <= 0)
         {
-            gameManager.GameOver(); 
+            playerAnim.SetBool("isDie", true);
+            dieCheck = true;
+            StartCoroutine(Die());
         }
     }
     
@@ -121,6 +124,13 @@ public class Player : MonoBehaviour
     //     Gizmos.color = Color.blue;
     //     Gizmos.DrawWireCube(pos.position,boxSize);
     // }
+
+    private IEnumerator Die()
+    {
+        yield return new WaitForSeconds(0.6f);
+        gameManager.GameOver();
+        dieCheck = false;
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
