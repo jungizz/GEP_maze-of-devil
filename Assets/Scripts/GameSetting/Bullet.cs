@@ -32,9 +32,6 @@ public class Bullet : MonoBehaviour
                 GameObject enemy = collision.gameObject;
                 enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.HP -= 10;
-                // if(enemyScript.HP <= 0) {
-                //     Destroy(collision.gameObject);
-                // }
                 Destroy(gameObject);
             }
         }else if(BulletName == "E") //적이 쏘는 총알일 경우 실행
@@ -46,6 +43,16 @@ public class Bullet : MonoBehaviour
                 if(playerScript.HP <= 0) {
                     gameManager.GameOver(); //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
                 }
+                Destroy(gameObject);
+            }
+        }else if(BulletName == "NE") //무력화 총알일 경우 실행 (체력을 안 깎이게 하기 위해서)
+        {
+            if(collision.CompareTag("Player"))
+                Destroy(gameObject);
+        }else if(BulletName == "NP") //무력화 총알일 경우 실행 (체력을 안 깎이게 하기 위해서)
+        {
+            if(collision.CompareTag("Enemy")){
+                collision.gameObject.GetComponent<Attack>().isNeutralize = true;
                 Destroy(gameObject);
             }
         }

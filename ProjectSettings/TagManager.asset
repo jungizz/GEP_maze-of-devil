@@ -10,9 +10,10 @@ TagManager:
   - Bullet
   - GameManager
   - HPItem
-  - Staff
   - BombItem
   - KeyItem
+  - Staff2Item
+  - StaffItem
   layers:
   - Default
   - TransparentFX

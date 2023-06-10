@@ -10,8 +10,10 @@ public class Player : MonoBehaviour
     public float HP;
     public float playerSpeed;
     private bool dieCheck;
-    [HideInInspector] public bool getStaff;
+    public bool neutralizeCheck;
+    [HideInInspector] public bool getStaff; //총알 공격
     [HideInInspector] public bool getBomb;
+    [HideInInspector] public bool getStaff2; //공격 무력화
 
     //키를 얻었을 때 화면에 띄울 이미지
     public GameObject keyImage;
@@ -48,13 +50,14 @@ public class Player : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            if(Input.GetKeyDown(KeyCode.Z) && !dieCheck)
+            if(Input.GetKeyDown(KeyCode.Z) && !dieCheck & !neutralizeCheck)
             {
                 if (getStaff) attackscript.basicShoot();
                 else if(getBomb) attackscript.BombAttack();
+                else if(getStaff2) attackscript.NeutralizeAttack();
             }
                 
-            if(Input.GetKeyDown(KeyCode.Space) && !dieCheck)
+            if(Input.GetKeyDown(KeyCode.Space) && !dieCheck && !neutralizeCheck)
                 basicAttack();
         }
 
@@ -145,16 +148,25 @@ public class Player : MonoBehaviour
             keyImage.SetActive(true);
         }
 
-        if (collision.gameObject.CompareTag("Staff"))
+        if (collision.gameObject.CompareTag("StaffItem"))
         {
             Destroy(collision.gameObject);
             getStaff = true;
             getBomb = false;
+            getStaff2 = false;
         }
         if (collision.gameObject.CompareTag("BombItem"))
         {
             Destroy(collision.gameObject);
             getBomb = true;
+            getStaff = false;
+            getStaff2 = false;
+        }
+        if (collision.gameObject.CompareTag("Staff2Item"))
+        {
+            Destroy(collision.gameObject);
+            getStaff2 = true;
+            getBomb = false;
             getStaff = false;
         }
     }
