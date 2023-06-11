@@ -39,6 +39,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isIdleLeft
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isTraceRight
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7618360603082945505}
   m_Solo: 0
@@ -174,7 +177,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isIdleLeft
+    m_ConditionEvent: isTraceLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6979107448423433968}
@@ -377,9 +380,6 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isIdleLeft
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
     m_ConditionEvent: isTraceRight
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
