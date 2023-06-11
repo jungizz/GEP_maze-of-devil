@@ -49,8 +49,8 @@ public class EnemyAI : MonoBehaviour
         else
         {
             //가만히 있는 애니메이션 실행
-            anim.SetBool("isTraceRight",false);
-            anim.SetBool("isTraceLeft",false);
+            //anim.SetBool("isTraceRight",false);
+            //anim.SetBool("isTraceLeft",false);
         }
     }
 
@@ -60,13 +60,13 @@ public class EnemyAI : MonoBehaviour
         if(dirX <= 0)
         {
             //왼쪽으로 움직이는 애니메이션 실행
-            anim.SetBool("isTraceRight",false);
-            anim.SetBool("isTraceLeft",true);
+            //anim.SetBool("isTraceRight",false);
+            //anim.SetBool("isTraceLeft",true);
         }else
         {
             //오른쪽으로 움직이는 애니메이션 실행
-            anim.SetBool("isTraceLeft",false);
-            anim.SetBool("isTraceRight",true);
+            //anim.SetBool("isTraceLeft",false);
+            //anim.SetBool("isTraceRight",true);
         }
 
         //적이 플레이어쪽으로 움직이도록 설정

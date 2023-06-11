@@ -13,10 +13,12 @@ public class Enemy : MonoBehaviour
     private Animator anim;
 
     public GameObject[] items;
+    private AudioSource deathSound;
 
     void Start()
     {
         anim = this.gameObject.GetComponent<Animator>();
+        deathSound = GameObject.Find("EnemyDeath").GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour
 
         if(HP <= 0)
         {
+            deathSound.Play();
             Destroy(this.gameObject);
             DropItem();
         }

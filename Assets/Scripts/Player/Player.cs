@@ -36,29 +36,63 @@ public class Player : MonoBehaviour
     private Attack attackscript;
     private GameManager gameManager;
 
+    private AudioSource swordSound;
+    private AudioSource shootSound;
+    private AudioSource ItemSound;
+    private AudioSource playerHurtSound;
+
     private void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
         pos = posRight;
         attackscript = GetComponent<Attack>();
-        GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            GameObject gameManagerObject = GameObject.FindWithTag("GameManager");
+            gameManager = gameManagerObject.GetComponent<GameManager>();
+
+            swordSound = GameObject.Find("Sword").GetComponent<AudioSource>();
+            shootSound = GameObject.Find("Gun").GetComponent<AudioSource>();
+            ItemSound = GameObject.Find("Item").GetComponent<AudioSource>();
+            playerHurtSound = GameObject.Find("Hurt").GetComponent<AudioSource>();
+        }
+
+        
     }
 
     void Update()
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            if(Input.GetKeyDown(KeyCode.Z) && !dieCheck & !neutralizeCheck)
+            //if(Input.GetKeyDown(KeyCode.Z) && !dieCheck & !neutralizeCheck)
+            if (Input.GetKeyDown(KeyCode.Z) && !dieCheck)
             {
-                if (getStaff) attackscript.basicShoot();
-                else if(getBomb) attackscript.BombAttack();
-                else if(getStaff2) attackscript.NeutralizeAttack();
+                if (getStaff)
+                {
+                    attackscript.basicShoot();
+                    shootSound.Play();
+                }
+                else if (getBomb)
+                {
+                    attackscript.BombAttack();
+                    shootSound.Play();
+                }
+                else if (getStaff2)
+                {
+                    attackscript.NeutralizeAttack();
+                    shootSound.Play();
+                }
             }
                 
-            if(Input.GetKeyDown(KeyCode.Space) && !dieCheck && !neutralizeCheck)
+            //if(Input.GetKeyDown(KeyCode.Space) && !dieCheck && !neutralizeCheck)
+            if (Input.GetKeyDown(KeyCode.Space) && !dieCheck)
+            {
                 basicAttack();
+                swordSound.Play();
+            }
+                
         }
 
         //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌
@@ -139,17 +173,20 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("HPItem"))
         {
+            ItemSound.Play();
             Destroy(collision.gameObject);
             HP += 10;
         }
         if (collision.gameObject.CompareTag("KeyItem"))
         {
+            ItemSound.Play();
             Destroy(collision.gameObject);
             keyImage.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("StaffItem"))
         {
+            ItemSound.Play();
             Destroy(collision.gameObject);
             getStaff = true;
             getBomb = false;
@@ -157,6 +194,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("BombItem"))
         {
+            ItemSound.Play();
             Destroy(collision.gameObject);
             getBomb = true;
             getStaff = false;
@@ -164,10 +202,17 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Staff2Item"))
         {
+            ItemSound.Play();
             Destroy(collision.gameObject);
             getStaff2 = true;
             getBomb = false;
             getStaff = false;
         }
+    }
+
+    public void DeceasePlayerHP(int num)
+    {
+        playerHurtSound.Play();
+        HP -= num;
     }
 }

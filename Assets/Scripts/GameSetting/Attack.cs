@@ -36,6 +36,7 @@ public class Attack : MonoBehaviour
     //적과 플레이어를 구분하기 위한 변수
     public string gameObjectName;
 
+
     void Start()
     {
         playerScript = player.GetComponent<Player>();
@@ -70,6 +71,11 @@ public class Attack : MonoBehaviour
             NeutralizeAttack();
             reload();
         }
+        if(gameObjectName == "Boss")
+        {
+            BossAttack();
+            reload();
+        }
     }
 
     //창을 휘두르는 공격패턴
@@ -99,7 +105,7 @@ public class Attack : MonoBehaviour
                         effect = Instantiate(effectObj, new Vector2(transform.position.x, (transform.position.y - 0.045f)),transform.rotation);
                         effectAnim = effect.GetComponent<Animator>();
                         effectAnim.SetBool("isEffect", true);   //공격이펙트 실행
-                        playerScript.HP -= 10;
+                        playerScript.DeceasePlayerHP(10);
                         StartCoroutine(CoolTime());     //공격 딜레이를 위한 코루틴 함수 실행
                     }
                 }
@@ -205,6 +211,23 @@ public class Attack : MonoBehaviour
         }
     }
 
+    public void BossAttack()
+    {
+        if (!isNeutralize)
+        {
+            //총알 딜레이
+            if (curShotDelay < maxShotDelay) return;
+            int rotate = 0;
+            for(int i=0; i<8; i++)
+            {
+                Instantiate(bulletObjE, transform.position, transform.rotation * Quaternion.Euler(0, 0, rotate));
+                rotate += 45;
+            }
+            
+            curShotDelay = 0; //총알은 쏜 다음에는 딜레이 변수 0으로 초기화
+        }
+    }
+
     //날리는 공격 딜레이를 위한 함수
     void reload()
     {
@@ -241,7 +264,7 @@ public class Attack : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            if(gameObjectName == "FollowE")
+            if (gameObjectName == "FollowE")
                 playerScript.HP -= 1;
         }
     }

@@ -8,9 +8,14 @@ public class GameManager : MonoBehaviour
 {
     public Image gameOverPanel;
 
+    public AudioSource DungeonSound;
+    public AudioSource gameoverSound;
+
     //게임 오버시 실행할 함수
     public void GameOver()
     {
+        gameoverSound.Play();
+        DungeonSound.Stop();
         gameOverPanel.gameObject.SetActive(true);
         Time.timeScale = 0;
     }
@@ -31,6 +36,7 @@ public class GameManager : MonoBehaviour
         gameOverPanel.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
+
 
     public void TitleScene()
     {
