@@ -45,8 +45,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //적이 죽었을때 실행되는 함수
     public void DropItem()
-    {
+    {   
+        //랜덤으로 떨어지게 설정
         int ran = Random.Range(0,3);
         if(ran >= 2)
             return;

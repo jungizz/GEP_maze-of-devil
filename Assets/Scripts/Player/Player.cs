@@ -66,8 +66,7 @@ public class Player : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            //if(Input.GetKeyDown(KeyCode.Z) && !dieCheck & !neutralizeCheck)
-            if (Input.GetKeyDown(KeyCode.Z) && !dieCheck)
+            if(Input.GetKeyDown(KeyCode.Z) && !dieCheck & !neutralizeCheck)
             {
                 if (getStaff)
                 {
@@ -86,8 +85,7 @@ public class Player : MonoBehaviour
                 }
             }
                 
-            //if(Input.GetKeyDown(KeyCode.Space) && !dieCheck && !neutralizeCheck)
-            if (Input.GetKeyDown(KeyCode.Space) && !dieCheck)
+            if(Input.GetKeyDown(KeyCode.Space) && !dieCheck && !neutralizeCheck)
             {
                 basicAttack();
                 swordSound.Play();
@@ -125,6 +123,7 @@ public class Player : MonoBehaviour
 
     void basicAttack()
     {
+        //플레이어가 바라보는 방향에서 공격이 가해지도록 설정
         if(checkMoveX < 0)
         {
             pos = posLeft;
@@ -139,6 +138,7 @@ public class Player : MonoBehaviour
             pos = posUp;
         }
 
+        //공격 범위 설정후 적이 있을 경우 공격
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
         foreach (Collider2D collider in collider2Ds)
         {
@@ -151,17 +151,13 @@ public class Player : MonoBehaviour
         Invoke("stopAttack", 0.3f);
     }
 
+    //공격 모션 멈추는 함수
     void stopAttack()
     {
         playerAnim.SetBool("isAttack", false);
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.blue;
-    //     Gizmos.DrawWireCube(pos.position,boxSize);
-    // }
-
+    //플레이어가 죽었을때 실행되는 함수
     private IEnumerator Die()
     {
         yield return new WaitForSeconds(0.6f);
@@ -175,7 +171,7 @@ public class Player : MonoBehaviour
         {
             ItemSound.Play();
             Destroy(collision.gameObject);
-            HP += 10;
+            HP += 25;
         }
         if (collision.gameObject.CompareTag("KeyItem"))
         {

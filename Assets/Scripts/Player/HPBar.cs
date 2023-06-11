@@ -31,7 +31,7 @@ public class HPBar : MonoBehaviour
     private void PlayerHP()
     {
         float HP = playerScript.HP;
-        HPbar.fillAmount = HP / 100;
-        HPText.text = string.Format("{0}/100", HP);
+        HPbar.fillAmount = HP / 200;
+        HPText.text = string.Format("{0}/200", HP);
     }
 }

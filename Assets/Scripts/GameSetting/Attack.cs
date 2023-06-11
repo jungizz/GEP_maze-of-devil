@@ -94,20 +94,17 @@ public class Attack : MonoBehaviour
                 machete.transform.rotation = Quaternion.Euler(0,0,-12);
             }
 
-            if(!isNeutralize)
+            //해당 범위내에 플레이어가 들어왔을 시 공격 실행
+            if (dis <= 1)
             {
-                //해당 범위내에 플레이어가 들어왔을 시 공격 실행
-                if (dis <= 1)
+                if(isHit)
                 {
-                    if(isHit)
-                    {
-                        isHit = false;
-                        effect = Instantiate(effectObj, new Vector2(transform.position.x, (transform.position.y - 0.045f)),transform.rotation);
-                        effectAnim = effect.GetComponent<Animator>();
-                        effectAnim.SetBool("isEffect", true);   //공격이펙트 실행
-                        playerScript.DeceasePlayerHP(10);
-                        StartCoroutine(CoolTime());     //공격 딜레이를 위한 코루틴 함수 실행
-                    }
+                    isHit = false;
+                    effect = Instantiate(effectObj, new Vector2(transform.position.x, (transform.position.y - 0.045f)),transform.rotation);
+                    effectAnim = effect.GetComponent<Animator>();
+                    effectAnim.SetBool("isEffect", true);   //공격이펙트 실행
+                    playerScript.DeceasePlayerHP(10);
+                    StartCoroutine(CoolTime());     //공격 딜레이를 위한 코루틴 함수 실행
                 }
             }
         }
@@ -194,10 +191,10 @@ public class Attack : MonoBehaviour
                 GameObject bullet3 = Instantiate(NeutrObjE, transform.position, transform.rotation); //적 위치에 총알 생성
                 Rigidbody2D rigid = bullet3.GetComponent<Rigidbody2D>();
                 Vector2 dirVec = player.transform.position - transform.position; //플레이어 위치 - Enemy 위치를 빼면 목표물로의 방향 값이 나옴
-                rigid.AddForce(dirVec.normalized * 10, ForceMode2D.Impulse); //단위벡터로 만들어줌(normalized : 벡터가 단위 값(1)로 변환된 변수)
+                rigid.AddForce(dirVec.normalized * 5, ForceMode2D.Impulse); //단위벡터로 만들어줌(normalized : 벡터가 단위 값(1)로 변환된 변수)
                                                                             //플레이어가 있던 위치로 총알 발사
-                playerScript.neutralizeCheck = true;      //플레이어가 공격 못하도록 설정
-                StartCoroutine(CoolTime());               //딜레이를 위해 코루틴 함수 실행
+                
+                if(playerScript.neutralizeCheck)    StartCoroutine(CoolTime());               //딜레이를 위해 코루틴 함수 실행
                 curShotDelay = 0; //총알은 쏜 다음에는 딜레이 변수 0으로 초기화   
             }
         }
@@ -254,6 +251,7 @@ public class Attack : MonoBehaviour
         }
         if(isNeutralize)
         {
+            //대기 3초후 다시 공격할 수 있게 실행
             yield return new WaitForSeconds(3.0f);
             isNeutralize = false;
         }

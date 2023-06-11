@@ -20,24 +20,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    //게임 시작
     public void StartGame()
     {
         SceneManager.LoadScene("SadVillage");
     }
 
+    //게임 재시작
     public void RePlayGame()
     {
-        //처음 위치에서 리스폰
-        // GameObject player = GameObject.FindWithTag("Player");
-        // player.transform.position = new Vector3(0.08f, -1.95f, 0);
-        // player.GetComponent<Player>().HP = 100;
-        // Camera.main.gameObject.transform.position = new Vector3(0, 0.1f, -10f);
         SceneManager.LoadScene("Dungeon");
         gameOverPanel.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
 
-
+    //타이틀 화면
     public void TitleScene()
     {
         SceneManager.LoadScene("TItle");

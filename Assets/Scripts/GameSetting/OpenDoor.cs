@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class OpenDoor : MonoBehaviour
 {
     public GameObject Enemy;
-    public GameObject Key; //Å° ÀÌ¹ÌÁö UI
+    public GameObject Key; //Å° ï¿½Ì¹ï¿½ï¿½ï¿½ UI
 
-    //´ÝÈù, ¿­¸° ¹® Å¸ÀÏ
+    //ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½
     public Tilemap tilemap;
     public TileBase closeDoorTile1;
     public TileBase closeDoorTile2;
@@ -23,8 +23,8 @@ public class OpenDoor : MonoBehaviour
     private bool openByKey = false;
 
 
-    //Ä«¸Þ¶ó ÀÌµ¿ °ü·Ã º¯¼ö
-    public float moveDirection; //¼öÆò 1, ¼öÁ÷ -1
+    //Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float moveDirection; //ï¿½ï¿½ï¿½ï¿½ 1, ï¿½ï¿½ï¿½ï¿½ -1
     private GameObject mainCamera;
     private Vector3 destination;
     private bool enterDoor = false;
@@ -46,7 +46,7 @@ public class OpenDoor : MonoBehaviour
 
     private void Update()
     {
-        //°¢ ´øÀü¿¡ ÀûÀÌ ´Ù Á×¾úÀ» ¶§ ¹®ÀÌ ¿­¸®´Â °æ¿ì
+        //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (openByEnemy &&  Enemy.transform.childCount < 1) 
         {
             Open();
@@ -62,7 +62,7 @@ public class OpenDoor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Ä«¸Þ¶ó ÀÌµ¿
+        //Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½
         if (enterDoor)
         {
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, destination, 0.1f);
@@ -70,34 +70,26 @@ public class OpenDoor : MonoBehaviour
         if (mainCamera.transform.position == destination) enterDoor = false;
     }
 
-    //¹® ¿­±â
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void Open()
     {
         doorSound.Play();
 
-        //ÄÝ¶óÀÌ´õÀÇ Trigger¸¦ È°¼ºÈ­ÇØ¼­ Åë°ú °¡´ÉÇÏµµ·Ï
+        //ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ Triggerï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½
         GetComponent<BoxCollider2D>().isTrigger = true;
 
-        //´ÝÈù ¹® Å¸ÀÏÀ» ¿­¸° ¹® Å¸ÀÏ·Î ¹Ù²Ù±â
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½Ï·ï¿½ ï¿½Ù²Ù±ï¿½
         tilemap.SwapTile(closeDoorTile1, openDoorTile1);
         tilemap.SwapTile(closeDoorTile2, openDoorTile2);
         tilemap.SwapTile(closeDoorTile3, openDoorTile3);
         tilemap.SwapTile(closeDoorTile4, openDoorTile4);
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-            
-    //    }
-    //}
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            //Å°¸¦ °¡Áö°í ÀÖÀ» ¶§¸¸ ¹® ¿­±â
+            //Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (openByKey && Key.activeSelf)
             {
                 Open();
@@ -105,22 +97,22 @@ public class OpenDoor : MonoBehaviour
                 openByKey = false;
             }
 
-            if (moveDirection == 1) //¼öÆòÀ¸·Î¸¸ ÀÌµ¿ °¡´ÉÇÑ ¹®
+            if (moveDirection == 1) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             {
-                //Ä«¸Þ¶ó°¡ ¹®º¸´Ù ¿ÞÂÊ¿¡ ÀÖÀ¸¸é 1, ¾Æ´Ï¸é -1
+                //Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1, ï¿½Æ´Ï¸ï¿½ -1
                 if (mainCamera.transform.position.x < transform.GetComponent<BoxCollider2D>().bounds.center.x) playerDirX = 1; 
                 else playerDirX = -1;
 
-                //Ä«¸Þ¶óÀÇ ¸ñÀûÁö ¼³Á¤
+                //Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 destination = new Vector3(mainCamera.transform.position.x + 17.7f * playerDirX, mainCamera.transform.position.y, mainCamera.transform.position.z);
             }
-            else if (moveDirection == -1) //¼öÁ÷À¸·Î¸¸ ÀÌµ¿ °¡´ÉÇÑ ¹®
+            else if (moveDirection == -1) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             {
-                //Ä«¸Þ¶ó°¡ ¹®º¸´Ù ¾Æ·¡¿¡ ÀÖÀ¸¸é 1, ¾Æ´Ï¸é -1
+                //Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1, ï¿½Æ´Ï¸ï¿½ -1
                 if (mainCamera.transform.position.y < transform.GetComponent<BoxCollider2D>().bounds.center.y) playerDirY = 1;
                 else playerDirY = -1;
 
-                //Ä«¸Þ¶óÀÇ ¸ñÀûÁö ¼³Á¤
+                //Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 destination = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y + 9.0f * playerDirY, mainCamera.transform.position.z);
             }
             enterDoor = true;

@@ -48,7 +48,10 @@ public class Bullet : MonoBehaviour
         }else if(BulletName == "NE") //무력화 총알일 경우 실행 (체력을 안 깎이게 하기 위해서)
         {
             if(collision.CompareTag("Player"))
+            {
+                playerScript.neutralizeCheck = true;
                 Destroy(gameObject);
+            }
         }else if(BulletName == "NP") //무력화 총알일 경우 실행 (체력을 안 깎이게 하기 위해서)
         {
             if(collision.CompareTag("Enemy")){
