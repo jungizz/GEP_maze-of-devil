@@ -37126,7 +37126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletObj: {fileID: 5807634355277370627, guid: 7aa87e421e95647d7904ba10e85c2183, type: 3}
-  HP: 200
+  HP: 300
   playerSpeed: 200
   neutralizeCheck: 0
   getStaff: 0
