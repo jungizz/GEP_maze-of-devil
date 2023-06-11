@@ -37986,13 +37986,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 396715905717550911, guid: 8cdd13ba085374679ac8cb93aa19116a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5242400606107742075, guid: 8cdd13ba085374679ac8cb93aa19116a, type: 3}
       propertyPath: m_Name
       value: weapon_staff2
       objectReference: {fileID: 0}
     - target: {fileID: 5242400606107742075, guid: 8cdd13ba085374679ac8cb93aa19116a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7386949921161636281, guid: 8cdd13ba085374679ac8cb93aa19116a, type: 3}
       propertyPath: m_RootOrder

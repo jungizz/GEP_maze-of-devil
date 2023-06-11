@@ -52,6 +52,12 @@ public class OpenDoor : MonoBehaviour
             Open();
             openByEnemy = false;
         }
+
+        if (openByKey && Key.activeSelf)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+
     }
 
     private void FixedUpdate()
@@ -79,24 +85,26 @@ public class OpenDoor : MonoBehaviour
         tilemap.SwapTile(closeDoorTile4, openDoorTile4);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            //키를 가지고 있을 때만 문 열기
-            if (openByKey  && Key.activeSelf) 
-            {
-                Open();
-                Key.SetActive(false);
-                openByKey = false;
-            }
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+            
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            //키를 가지고 있을 때만 문 열기
+            if (openByKey && Key.activeSelf)
+            {
+                Open();
+                Key.SetActive(false);
+                openByKey = false;
+            }
+
             if (moveDirection == 1) //수평으로만 이동 가능한 문
             {
                 //카메라가 문보다 왼쪽에 있으면 1, 아니면 -1

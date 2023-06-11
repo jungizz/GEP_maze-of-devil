@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
 
     public void DropItem()
     {
-        int ran = Random.Range(0,4);
+        int ran = Random.Range(0,3);
         if(ran >= 2)
             return;
         if(ran == 1 && items[1].gameObject == null)
