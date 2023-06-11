@@ -89,8 +89,7 @@ public class Player : MonoBehaviour
             {
                 basicAttack();
                 swordSound.Play();
-            }
-                
+            }             
         }
 
         //플레이어 라이프가 0이 되었을 때 게임오버 만들어줌

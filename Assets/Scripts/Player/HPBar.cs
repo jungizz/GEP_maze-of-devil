@@ -19,21 +19,22 @@ public class HPBar : MonoBehaviour
 
     private void Update()
     {
-        //ÇÃ·¹ÀÌ¾î ¸Ó¸® À§·Î Ã¼·Â¹Ù°¡ µû¶ó´Ù´Ï±â
+        //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½Â¹Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½Ù´Ï±ï¿½
         transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + Vector3.up);
         PlayerHP();
 
         if(playerScript.HP <= 0)
-        {
             Destroy(this.gameObject);
-        }
+
+        if(playerScript.HP > 300)
+            playerScript.HP = 300;
     }
 
     private void PlayerHP()
     {
-        //HP ½½¶óÀÌ´õ¿¡ Ã¼·Â Ç¥½Ã
+        //HP ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ Ç¥ï¿½ï¿½
         float HP = playerScript.HP;
-        HPbar.fillAmount = HP / 200;
-        HPText.text = string.Format("{0}/200", HP);
+        HPbar.fillAmount = HP / 300;
+        HPText.text = string.Format("{0}/300", HP);
     }
 }
