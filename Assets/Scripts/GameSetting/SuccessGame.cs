@@ -19,10 +19,13 @@ public class SuccessGame : MonoBehaviour
 
     private void Update()
     {
+        //보스 던전의 적을 다 죽인 경우
         if (!isSuccess && Enemy.transform.childCount < 1)
         {
             successSound.Play();
             dungeonSound.Stop();
+
+            //3초 뒤 씬 이동
             Invoke("changeScene", 3f);
             isSuccess = true;
         }
