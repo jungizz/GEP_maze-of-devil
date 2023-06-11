@@ -19,6 +19,7 @@ public class HPBar : MonoBehaviour
 
     private void Update()
     {
+        //플레이어 머리 위로 체력바가 따라다니기
         transform.position = Camera.main.WorldToScreenPoint(Player.transform.position + Vector3.up);
         PlayerHP();
 
@@ -30,6 +31,7 @@ public class HPBar : MonoBehaviour
 
     private void PlayerHP()
     {
+        //HP 슬라이더에 체력 표시
         float HP = playerScript.HP;
         HPbar.fillAmount = HP / 200;
         HPText.text = string.Format("{0}/200", HP);
